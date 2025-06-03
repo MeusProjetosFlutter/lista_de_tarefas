@@ -19,7 +19,7 @@ class TodoListItem extends StatelessWidget {
             spacing: 0,
             flex: 2,
             onPressed: (context) {onDelete(todo);},
-            backgroundColor: const Color(0xFF7BC043),
+            backgroundColor: const Color(0xFFFA0000),
             foregroundColor: Colors.white,
             icon: Icons.delete,
             label: 'Excluir',

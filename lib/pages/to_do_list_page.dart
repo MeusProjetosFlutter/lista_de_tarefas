@@ -16,11 +16,28 @@ class _ToDoListPageState extends State<ToDoListPage> {
       TodoRepository(); //criando um novo repositório
 
   List<Todo> todos = [];
-  int count = 0;
+  late int count;
   List<Todo> deletedTodos = [];
   Todo? deletedTodo;
   int? deletedTodoIndex;
   List<Todo> listBackup = [];
+  bool todoWasExcluded = false;
+  String? errorText;
+
+  @override
+  void initState() {
+    //metodo chamado na criacao do widget statefull, so é chamado na abertura da aplicacao uma unica vez
+    super.initState(); //obtigatorio chamar esse metodo
+
+    todoRepository.getTodoList().then((value) {
+      //pega a lista salva no sharedpreferencies e retorna no value
+      setState(() {
+        todos = value;
+        count = todos.length;
+        listBackup.addAll(todos);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +55,12 @@ class _ToDoListPageState extends State<ToDoListPage> {
                       flex: 8,
                       child: TextField(
                         controller: emailController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: "Tarefa",
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20))),
+                          errorText: errorText,
                         ),
                       ),
                     ),
@@ -54,16 +72,27 @@ class _ToDoListPageState extends State<ToDoListPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           String text = emailController.text;
+
+                          if (text.isEmpty) {
+                            setState(() {
+                              errorText = "O título não pode ser vazio";
+                            });
+                            return;
+                          }
+
                           setState(() {
-                            Todo newtodo = Todo(text,
-                                DateTime.now()); // criando uma nova tarefa
+                            Todo newtodo = Todo(
+                                title: text,
+                                dateTime:
+                                    DateTime.now()); // criando uma nova tarefa
                             todos.add(newtodo);
                             listBackup.add(newtodo);
                             todoRepository.saveTodoList(
-                                listBackup); //salvo a lista no repositorio
+                                todos); //salvo a lista no repositorio
                             //adicionando a tarefa na lista
                             count++;
                             emailController.clear();
+                            errorText = null;
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -99,12 +128,13 @@ class _ToDoListPageState extends State<ToDoListPage> {
                       Expanded(
                           flex: 3,
                           child: ElevatedButton(
-                              onPressed: count == 0
+                              onPressed: todos.isEmpty
                                   ? () {
                                       //Restaurar tarefas
                                       setState(() {
                                         todos.addAll(listBackup);
                                         //deletedTodos.clear();
+                                        todoRepository.saveTodoList(todos);
 
                                         count = todos.length;
                                       });
@@ -112,7 +142,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                                   : () {
                                       showDeleteAllConfirmation();
                                     },
-                              child: count == 0
+                              child: todos.isEmpty
                                   ? const Text("Restaurar Tarefas")
                                   : const Text("Limpar Tarefas"))),
                     ],
@@ -133,6 +163,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
       deletedTodos.add(todo);
       todos.remove(todo);
       count--;
+      todoWasExcluded = true;
+      todoRepository.saveTodoList(todos);
     });
     ScaffoldMessenger.of(context).clearSnackBars(); //Limpar snackbars
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -145,6 +177,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
               deletedTodos.remove(deletedTodo);
               todos.insert(deletedTodoIndex!, deletedTodo!);
               count++;
+              todoWasExcluded = false;
+              todoRepository.saveTodoList(todos);
             });
           }),
     ));
