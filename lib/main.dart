@@ -3,18 +3,18 @@ import 'package:lista_de_tarefas/pages/to_do_list_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(localizationsDelegates: const [
+    return const MaterialApp(localizationsDelegates: [
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate
-    ], supportedLocales: const [
+    ], supportedLocales: [
       Locale('pt', 'BR')
     ], home: ToDoListPage());
   }

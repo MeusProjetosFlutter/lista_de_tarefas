@@ -14,11 +14,13 @@ class TodoListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: Slidable(
-         endActionPane:  ActionPane(motion: BehindMotion(), children: [
+        endActionPane: ActionPane(motion: const BehindMotion(), children: [
           SlidableAction(
             spacing: 0,
             flex: 2,
-            onPressed: (context) {onDelete(todo);},
+            onPressed: (context) {
+              onDelete(todo);
+            },
             backgroundColor: const Color(0xFFFA0000),
             foregroundColor: Colors.white,
             icon: Icons.delete,
@@ -31,8 +33,8 @@ class TodoListItem extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-              color: Colors.blueGrey.shade100,
-              //borderRadius: BorderRadius.circular(20)
+            color: Colors.blueGrey.shade100,
+            //borderRadius: BorderRadius.circular(20)
           ),
           //margin: const EdgeInsets.symmetric(vertical: 2),
           child: Column(
@@ -51,7 +53,6 @@ class TodoListItem extends StatelessWidget {
             ],
           ),
         ),
-
       ),
     );
   }
