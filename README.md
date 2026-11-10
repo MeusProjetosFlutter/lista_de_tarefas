@@ -77,7 +77,8 @@ Através da classe `TodoRepository`, as operações de armazenamento e recupera�
 <img width="1080" height="2400" alt="Screenshot_1794275752" src="https://github.com/user-attachments/assets/be7579c9-e273-47e2-b4ba-964cd5c007fe" />
 <img width="1080" height="2400" alt="Screenshot_1794275767" src="https://github.com/user-attachments/assets/dddc8da9-6041-45d6-95d0-f15854bacf25" />
 <img width="1080" height="2400" alt="Screenshot_1794277043" src="https://github.com/user-attachments/assets/468c183e-e41c-44ab-91a0-5f525cd41753" />
-<img width="1080" height="2400" alt="Screenshot_1794277071" src="https://github.com/user-attachments/assets/62b42055-cd7d-423a-a548-fccd3b2dcfb9" />
+<img width="1080" height="2400" alt="Screenshot_1794277190" src="https://github.com/user-attachments/assets/30da83ec-0245-4b23-99dc-13d51dd1b325" />
+
 
 # Como executar o projeto
 
