@@ -16,7 +16,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
       TodoRepository(); //criando um novo repositório
 
   List<Todo> todos = [];
-  late int count;
+  int count = 0;
   List<Todo> deletedTodos = [];
   Todo? deletedTodo;
   int? deletedTodoIndex;
@@ -68,7 +68,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
                       width: 8,
                     ),
                     Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: ElevatedButton(
                         onPressed: () {
                           String text = emailController.text;
@@ -96,6 +96,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
                             backgroundColor: Colors.lightGreen[400],
                             padding: const EdgeInsets.all(20)),
                         child: const Icon(
